@@ -11,11 +11,11 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req,file,cb)=>{
     //image with png, jpg, jpeg and svg
-    if(file.mimetype=='image/png' || 'image/jpg' || 'image/jpeg' || 'image/svg' ){
+    if(file.mimetype=='image/png' || 'image/jpg' || 'image/jpeg' || 'image/svg' || 'image/webp' ){
         cb(null,true)
     }else{
         cb(null,false)
-        return cb(new Error("Accept only png, jpg, jpeg or svg files"))
+        return cb(new Error("Accept only png, jpg, webp, jpeg or svg files"))
     }
 }
 
