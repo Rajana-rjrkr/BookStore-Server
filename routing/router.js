@@ -26,4 +26,13 @@ router.get('/all-books',jwtMiddleware,bookController.getAllBooksController)
 //all-books
 router.get('/books/:id/view',jwtMiddleware,bookController.viewBookController)
 
+//get user books
+router.get('/user-books',jwtMiddleware,bookController.getAllUserBooksController)
+
+//get user bought books
+router.get('/user-bought-books',jwtMiddleware,bookController.getAllUserBoughtBooksController)
+
+//delete user books
+router.get('/user-books/:id/remove',jwtMiddleware,bookController.deleteUserBookController)
+
 module.exports = router

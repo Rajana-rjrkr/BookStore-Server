@@ -40,9 +40,14 @@ exports.getHomeBooksController = async (req, res) => {
 //get all books
 exports.getAllBooksController = async (req, res) => {
     console.log("Inside getAllBooks");
+    const searchKey = req.query.search
     const email = req.payload
+    const query = {
+        title: { $regex: searchKey, $options: 'i' },
+        userMail: { $ne: email }
+    }
     try {
-        const allBooks = await books.find({userMail:{$ne:email}})
+        const allBooks = await books.find(query)
         res.status(200).json(allBooks)
     } catch (err) {
         res.status(500).json(err)
@@ -52,11 +57,49 @@ exports.getAllBooksController = async (req, res) => {
 //View books
 exports.viewBookController = async (req, res) => {
     console.log("Inside ViewBookController");
-    const {id} = req.params
+    const { id } = req.params
+    console.log(id);
+    try {
+        const viewBook = await books.findById({ _id: id })
+        res.status(200).json(viewBook)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+
+//get all user books
+exports.getAllUserBooksController = async (req, res) => {
+    console.log("Inside getAllUserBooksController");
+    const email = req.payload
+    try {
+        const allUserBooks = await books.find({ userMail: email })
+        res.status(200).json(allUserBooks)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+
+//get all user bought books
+exports.getAllUserBoughtBooksController = async (req, res) => {
+    console.log("Inside getAllUserBoughtBooksController");
+    const email = req.payload
+    try {
+        const allUserBoughtBooks = await books.find({ bought: email })
+        res.status(200).json(allUserBoughtBooks)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+
+//removing user uploaded books
+exports.deleteUserBookController = async (req,res)=>{
+    console.log("Inside deleteUserBookController");
+    //get book id
+    const { id } = req.params
     console.log(id);
     try{
-        const viewBook = await books.findById({_id:id})
-        res.status(200).json(viewBook)
+       await books.findByIdAndDelete({_id:id})
+       res.status(200).json("Book Deleted Successfully...")
     }catch(err){
         res.status(500).json(err)
     }
