@@ -6,33 +6,39 @@ const jwtMiddleware = require('../middlewares/jwtMiddleware')
 const multerConfig = require('../middlewares/imageMulterMiddleware')
 
 //register
-router.post('/register',userController.registerController)
+router.post('/register', userController.registerController)
 
 //login
-router.post('/login',userController.loginController)
+router.post('/login', userController.loginController)
 
 //Googlelogin
-router.post('/google-login',userController.googleLoginController)
+router.post('/google-login', userController.googleLoginController)
+
+//   for Authorised User
+// -----------------------
 
 //addBook
-router.post('/add-book',jwtMiddleware,multerConfig.array('uploadImages',3),bookController.addBookController)
+router.post('/add-book', jwtMiddleware, multerConfig.array('uploadImages', 3), bookController.addBookController)
 
 //home-books
-router.get('/home-books',bookController.getHomeBooksController)
+router.get('/home-books', bookController.getHomeBooksController)
 
 //all-books
-router.get('/all-books',jwtMiddleware,bookController.getAllBooksController)
+router.get('/all-books', jwtMiddleware, bookController.getAllBooksController)
 
 //all-books
-router.get('/books/:id/view',jwtMiddleware,bookController.viewBookController)
+router.get('/books/:id/view', jwtMiddleware, bookController.viewBookController)
 
 //get user books
-router.get('/user-books',jwtMiddleware,bookController.getAllUserBooksController)
+router.get('/user-books', jwtMiddleware, bookController.getAllUserBooksController)
 
 //get user bought books
-router.get('/user-bought-books',jwtMiddleware,bookController.getAllUserBoughtBooksController)
+router.get('/user-bought-books', jwtMiddleware, bookController.getAllUserBoughtBooksController)
 
 //delete user books
-router.delete('/user-books/:id/remove',jwtMiddleware,bookController.deleteUserBookController)
+router.delete('/user-books/:id/remove', jwtMiddleware, bookController.deleteUserBookController)
+
+//user-profile
+router.put('/user-profile/edit', jwtMiddleware,multerConfig.single('profile'), userController.userProfileEditController)
 
 module.exports = router
