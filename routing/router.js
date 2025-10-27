@@ -4,7 +4,10 @@ const userController = require('./controllers/userController')
 const bookController = require('./controllers/bookController')
 const jwtMiddleware = require('../middlewares/jwtMiddleware')
 const multerConfig = require('../middlewares/imageMulterMiddleware')
+const adminJwtMiddleware = require('../middlewares/adminJwtMiddleware')
 
+
+//   for unauthorised User
 //register
 router.post('/register', userController.registerController)
 
@@ -38,7 +41,14 @@ router.get('/user-bought-books', jwtMiddleware, bookController.getAllUserBoughtB
 //delete user books
 router.delete('/user-books/:id/remove', jwtMiddleware, bookController.deleteUserBookController)
 
-//user-profile
-router.put('/user-profile/edit', jwtMiddleware,multerConfig.single('profile'), userController.userProfileEditController)
+//user-profile update
+router.put('/user-profile/edit', jwtMiddleware, multerConfig.single('profile'), userController.userProfileEditController)
+
+//  -------------------- for Authorised User - admin  -------------------------
+//to get all user
+router.get('/all-user', adminJwtMiddleware, userController.getAllUsersController)
+
+//to get all books
+router.get('/admin-all-books', adminJwtMiddleware, bookController.getAllBooksAdminController)
 
 module.exports = router

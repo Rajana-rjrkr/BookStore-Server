@@ -92,15 +92,26 @@ exports.getAllUserBoughtBooksController = async (req, res) => {
 }
 
 //removing user uploaded books
-exports.deleteUserBookController = async (req,res)=>{
+exports.deleteUserBookController = async (req, res) => {
     console.log("Inside deleteUserBookController");
     //get book id
     const { id } = req.params
     console.log(id);
-    try{
-       await books.findByIdAndDelete({_id:id})
-       res.status(200).json("Book Deleted Successfully...")
-    }catch(err){
+    try {
+        await books.findByIdAndDelete({ _id: id })
+        res.status(200).json("Book Deleted Successfully...")
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+
+//get all books to admin
+exports.getAllBooksAdminController = async (req, res) => {
+    console.log('Inside getAllBooksAdminController');
+    try {
+        const allAdminBooks = await books.find()
+        res.status(200).json(allAdminBooks)
+    } catch (err) {
         res.status(500).json(err)
     }
 }
