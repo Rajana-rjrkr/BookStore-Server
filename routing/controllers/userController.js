@@ -79,7 +79,7 @@ exports.googleLoginController = async (req, res) => {
 
 }
 
-//profile-user
+//Update profile-user
 exports.userProfileEditController = async (req, res) => {
     console.log("Inside userProfileEditController");
     // get data to be updated from req, body, payload, file
