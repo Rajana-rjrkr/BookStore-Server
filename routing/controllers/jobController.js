@@ -21,7 +21,7 @@ exports.addJobController = async (req, res) => {
     }
 
 }
-//gel all jobs
+//get all jobs
 exports.getAllJobsController = async (req, res) => {
     console.log("Inside getAllJobsController");
     const searchKey = req.query.search

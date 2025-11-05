@@ -8,6 +8,7 @@ const adminJwtMiddleware = require('../middlewares/adminJwtMiddleware')
 const jobController = require('./controllers/jobController')
 const pdfMulterConfig = require('../middlewares/pdfMulterMiddleware')
 const applicationController = require('./controllers/applicationController')
+
 //   for unauthorised User
 //register
 router.post('/register', userController.registerController)
@@ -33,7 +34,7 @@ router.get('/home-books', bookController.getHomeBooksController)
 //all-books
 router.get('/all-books', jwtMiddleware, bookController.getAllBooksController)
 
-//all-books
+//view-books
 router.get('/books/:id/view', jwtMiddleware, bookController.viewBookController)
 
 //get user books
@@ -50,6 +51,9 @@ router.put('/user-profile/edit', jwtMiddleware, multerConfig.single('profile'), 
 
 //add application
 router.post('/application/add',jwtMiddleware,pdfMulterConfig.single('resume'),applicationController.addApplicationController)
+
+//make payment
+router.post('/make-payment',jwtMiddleware,bookController.makeBookPaymentController)
 
 //  -------------------- for Authorised User - admin  -------------------------
 //to get all user
@@ -72,6 +76,7 @@ router.delete('/job/:id/remove', adminJwtMiddleware, jobController.removeJobCont
 
 //get-application
 router.get('/all-applications',adminJwtMiddleware,applicationController.getApplicationController)
+
 
 
 module.exports = router
